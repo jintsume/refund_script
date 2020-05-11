@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<database name="default" defaultIdMethod="native" defaultPhpNamingMethod="underscore">
+  <table name="webinarConfig" idMethod="native" phpName="Webinarconfig">
+    <column name="id" phpName="Id" type="INTEGER" primaryKey="true" autoIncrement="true" required="true"/>
+    <column name="name" phpName="Name" type="VARCHAR" size="255" required="true"/>
+    <column name="webinarID" phpName="Webinarid" type="INTEGER" required="true" defaultValue="0"/>
+    <column name="thankyouUrl" phpName="Thankyouurl" type="VARCHAR" size="255" required="true"/>
+    <column name="apiKey" phpName="Apikey" type="VARCHAR" size="255" required="true"/>
+    <column name="status" phpName="Status" type="BOOLEAN" size="1" required="true" defaultValue="true"/>
+    <vendor type="mysql">
+      <parameter name="Engine" value="InnoDB"/>
+    </vendor>
+  </table>
+  <table name="webinar_user" idMethod="native" phpName="WebinarUser">
+    <column name="webinar_id" phpName="WebinarId" type="INTEGER" required="true"/>
+    <column name="user_id" phpName="UserId" type="INTEGER" required="true"/>
+    <column name="first_name" phpName="FirstName" type="VARCHAR" size="20" required="true"/>
+    <column name="last_name" phpName="LastName" type="VARCHAR" size="20" required="true"/>
+    <column name="phone_country_code" phpName="PhoneCountryCode" type="VARCHAR" size="5" required="true"/>
+    <column name="phone" phpName="Phone" type="VARCHAR" size="10" required="true"/>
+    <column name="email" phpName="Email" type="VARCHAR" size="30" required="true"/>
+    <column name="password" phpName="Password" type="VARCHAR" size="20" required="true"/>
+    <column name="schedule" phpName="Schedule" type="INTEGER" required="true"/>
+    <column name="date" phpName="Date" type="VARCHAR" size="20" required="true"/>
+    <column name="timezone" phpName="Timezone" type="VARCHAR" size="20" required="true"/>
+    <column name="live_room_url" phpName="LiveRoomUrl" type="VARCHAR" size="50" required="true"/>
+    <column name="replay_room_url" phpName="ReplayRoomUrl" type="VARCHAR" size="50" required="true"/>
+    <column name="thank_you_url" phpName="ThankYouUrl" type="VARCHAR" size="50" required="true"/>
+    <vendor type="mysql">
+      <parameter name="Engine" value="MyISAM"/>
+    </vendor>
+  </table>
+</database>
