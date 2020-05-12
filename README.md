@@ -16,3 +16,7 @@ Copy `.env.example` to `.env` and fill out values with API secrets
 For live debugging in PHP environment
 
 `bash interactive.sh`
+
+### Built With
+* [Guzzle HTTP Client](http://docs.guzzlephp.org/en/stable/)
+* [Propel ORM](http://propelorm.org/documentation/)
