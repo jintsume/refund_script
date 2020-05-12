@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <database name="default" defaultIdMethod="native" defaultPhpNamingMethod="underscore">
+
   <table name="webinarConfig" idMethod="native" phpName="Webinarconfig">
     <column name="id" phpName="Id" type="INTEGER" primaryKey="true" autoIncrement="true" required="true"/>
     <column name="name" phpName="Name" type="VARCHAR" size="255" required="true"/>
@@ -11,6 +12,7 @@
       <parameter name="Engine" value="InnoDB"/>
     </vendor>
   </table>
+
   <table name="webinar_user" idMethod="native" phpName="WebinarUser">
     <column name="webinar_id" phpName="WebinarId" type="INTEGER" required="true"/>
     <column name="user_id" phpName="UserId" type="INTEGER" required="true"/>
@@ -30,4 +32,18 @@
       <parameter name="Engine" value="MyISAM"/>
     </vendor>
   </table>
+
+  <table name="active_campaign_contacts" idMethod="native" phpName="ActiveCampaignContacts">
+    <column name="id" phpName="Id" primaryKey="true" type="BIGINT" required="true"/>
+    <column name="first_name" phpName="FirstName" type="VARCHAR" size="255" required="true"/>
+    <column name="last_name" phpName="LastName" type="VARCHAR" size="255" required="true"/>
+    <column name="email" phpName="Email" type="VARCHAR" size="255" required="true"/>
+    <column name="recurring_status" phpName="RecurringStatus" type="VARCHAR" size="255" required="true"/>
+    <column name="products_purchased" phpName="ProductsPurchased" type="VARCHAR" size="2000" required="true"/>
+    <column name="stripe_refund_processed" phpName="StripeRefundProcessed" type="BOOLEAN" size="1" required="true" defaultValue="false"/>
+    <vendor type="mysql">
+      <parameter name="Engine" value="InnoDB"/>
+    </vendor>
+  </table>
+
 </database>

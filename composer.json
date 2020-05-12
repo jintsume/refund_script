@@ -2,5 +2,8 @@
   "require": {
     "propel/propel": "~2.0@dev",
     "guzzlehttp/guzzle": "~6.0"
+  },
+  "autoload": {
+    "classmap": ["generated-classes/"]
   }
 }

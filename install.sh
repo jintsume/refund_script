@@ -3,4 +3,4 @@ bash build.sh && \
   --env-file ./.env \
   -v ${PWD}:/refund_script \
   -w /refund_script \
-  composer install
+  composer /bin/bash -c "composer install && composer dump-autoload && vendor/bin/propel config:convert"
