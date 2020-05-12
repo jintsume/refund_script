@@ -58,7 +58,7 @@ class ActiveCampaignContactsTableMap extends TableMap
     /**
      * The total number of columns
      */
-    const NUM_COLUMNS = 7;
+    const NUM_COLUMNS = 8;
 
     /**
      * The number of lazy-loaded columns
@@ -68,7 +68,7 @@ class ActiveCampaignContactsTableMap extends TableMap
     /**
      * The number of columns to hydrate (NUM_COLUMNS - NUM_LAZY_LOAD_COLUMNS)
      */
-    const NUM_HYDRATE_COLUMNS = 7;
+    const NUM_HYDRATE_COLUMNS = 8;
 
     /**
      * the column name for the id field
@@ -89,6 +89,11 @@ class ActiveCampaignContactsTableMap extends TableMap
      * the column name for the email field
      */
     const COL_EMAIL = 'active_campaign_contacts.email';
+
+    /**
+     * the column name for the refund_tag_names field
+     */
+    const COL_REFUND_TAG_NAMES = 'active_campaign_contacts.refund_tag_names';
 
     /**
      * the column name for the recurring_status field
@@ -117,11 +122,11 @@ class ActiveCampaignContactsTableMap extends TableMap
      * e.g. self::$fieldNames[self::TYPE_PHPNAME][0] = 'Id'
      */
     protected static $fieldNames = array (
-        self::TYPE_PHPNAME       => array('Id', 'FirstName', 'LastName', 'Email', 'RecurringStatus', 'ProductsPurchased', 'StripeRefundProcessed', ),
-        self::TYPE_CAMELNAME     => array('id', 'firstName', 'lastName', 'email', 'recurringStatus', 'productsPurchased', 'stripeRefundProcessed', ),
-        self::TYPE_COLNAME       => array(ActiveCampaignContactsTableMap::COL_ID, ActiveCampaignContactsTableMap::COL_FIRST_NAME, ActiveCampaignContactsTableMap::COL_LAST_NAME, ActiveCampaignContactsTableMap::COL_EMAIL, ActiveCampaignContactsTableMap::COL_RECURRING_STATUS, ActiveCampaignContactsTableMap::COL_PRODUCTS_PURCHASED, ActiveCampaignContactsTableMap::COL_STRIPE_REFUND_PROCESSED, ),
-        self::TYPE_FIELDNAME     => array('id', 'first_name', 'last_name', 'email', 'recurring_status', 'products_purchased', 'stripe_refund_processed', ),
-        self::TYPE_NUM           => array(0, 1, 2, 3, 4, 5, 6, )
+        self::TYPE_PHPNAME       => array('Id', 'FirstName', 'LastName', 'Email', 'RefundTagNames', 'RecurringStatus', 'ProductsPurchased', 'StripeRefundProcessed', ),
+        self::TYPE_CAMELNAME     => array('id', 'firstName', 'lastName', 'email', 'refundTagNames', 'recurringStatus', 'productsPurchased', 'stripeRefundProcessed', ),
+        self::TYPE_COLNAME       => array(ActiveCampaignContactsTableMap::COL_ID, ActiveCampaignContactsTableMap::COL_FIRST_NAME, ActiveCampaignContactsTableMap::COL_LAST_NAME, ActiveCampaignContactsTableMap::COL_EMAIL, ActiveCampaignContactsTableMap::COL_REFUND_TAG_NAMES, ActiveCampaignContactsTableMap::COL_RECURRING_STATUS, ActiveCampaignContactsTableMap::COL_PRODUCTS_PURCHASED, ActiveCampaignContactsTableMap::COL_STRIPE_REFUND_PROCESSED, ),
+        self::TYPE_FIELDNAME     => array('id', 'first_name', 'last_name', 'email', 'refund_tag_names', 'recurring_status', 'products_purchased', 'stripe_refund_processed', ),
+        self::TYPE_NUM           => array(0, 1, 2, 3, 4, 5, 6, 7, )
     );
 
     /**
@@ -131,11 +136,11 @@ class ActiveCampaignContactsTableMap extends TableMap
      * e.g. self::$fieldKeys[self::TYPE_PHPNAME]['Id'] = 0
      */
     protected static $fieldKeys = array (
-        self::TYPE_PHPNAME       => array('Id' => 0, 'FirstName' => 1, 'LastName' => 2, 'Email' => 3, 'RecurringStatus' => 4, 'ProductsPurchased' => 5, 'StripeRefundProcessed' => 6, ),
-        self::TYPE_CAMELNAME     => array('id' => 0, 'firstName' => 1, 'lastName' => 2, 'email' => 3, 'recurringStatus' => 4, 'productsPurchased' => 5, 'stripeRefundProcessed' => 6, ),
-        self::TYPE_COLNAME       => array(ActiveCampaignContactsTableMap::COL_ID => 0, ActiveCampaignContactsTableMap::COL_FIRST_NAME => 1, ActiveCampaignContactsTableMap::COL_LAST_NAME => 2, ActiveCampaignContactsTableMap::COL_EMAIL => 3, ActiveCampaignContactsTableMap::COL_RECURRING_STATUS => 4, ActiveCampaignContactsTableMap::COL_PRODUCTS_PURCHASED => 5, ActiveCampaignContactsTableMap::COL_STRIPE_REFUND_PROCESSED => 6, ),
-        self::TYPE_FIELDNAME     => array('id' => 0, 'first_name' => 1, 'last_name' => 2, 'email' => 3, 'recurring_status' => 4, 'products_purchased' => 5, 'stripe_refund_processed' => 6, ),
-        self::TYPE_NUM           => array(0, 1, 2, 3, 4, 5, 6, )
+        self::TYPE_PHPNAME       => array('Id' => 0, 'FirstName' => 1, 'LastName' => 2, 'Email' => 3, 'RefundTagNames' => 4, 'RecurringStatus' => 5, 'ProductsPurchased' => 6, 'StripeRefundProcessed' => 7, ),
+        self::TYPE_CAMELNAME     => array('id' => 0, 'firstName' => 1, 'lastName' => 2, 'email' => 3, 'refundTagNames' => 4, 'recurringStatus' => 5, 'productsPurchased' => 6, 'stripeRefundProcessed' => 7, ),
+        self::TYPE_COLNAME       => array(ActiveCampaignContactsTableMap::COL_ID => 0, ActiveCampaignContactsTableMap::COL_FIRST_NAME => 1, ActiveCampaignContactsTableMap::COL_LAST_NAME => 2, ActiveCampaignContactsTableMap::COL_EMAIL => 3, ActiveCampaignContactsTableMap::COL_REFUND_TAG_NAMES => 4, ActiveCampaignContactsTableMap::COL_RECURRING_STATUS => 5, ActiveCampaignContactsTableMap::COL_PRODUCTS_PURCHASED => 6, ActiveCampaignContactsTableMap::COL_STRIPE_REFUND_PROCESSED => 7, ),
+        self::TYPE_FIELDNAME     => array('id' => 0, 'first_name' => 1, 'last_name' => 2, 'email' => 3, 'refund_tag_names' => 4, 'recurring_status' => 5, 'products_purchased' => 6, 'stripe_refund_processed' => 7, ),
+        self::TYPE_NUM           => array(0, 1, 2, 3, 4, 5, 6, 7, )
     );
 
     /**
@@ -159,6 +164,7 @@ class ActiveCampaignContactsTableMap extends TableMap
         $this->addColumn('first_name', 'FirstName', 'VARCHAR', true, 255, null);
         $this->addColumn('last_name', 'LastName', 'VARCHAR', true, 255, null);
         $this->addColumn('email', 'Email', 'VARCHAR', true, 255, null);
+        $this->addColumn('refund_tag_names', 'RefundTagNames', 'VARCHAR', true, 2000, null);
         $this->addColumn('recurring_status', 'RecurringStatus', 'VARCHAR', true, 255, null);
         $this->addColumn('products_purchased', 'ProductsPurchased', 'VARCHAR', true, 2000, null);
         $this->addColumn('stripe_refund_processed', 'StripeRefundProcessed', 'BOOLEAN', true, 1, false);
@@ -316,6 +322,7 @@ class ActiveCampaignContactsTableMap extends TableMap
             $criteria->addSelectColumn(ActiveCampaignContactsTableMap::COL_FIRST_NAME);
             $criteria->addSelectColumn(ActiveCampaignContactsTableMap::COL_LAST_NAME);
             $criteria->addSelectColumn(ActiveCampaignContactsTableMap::COL_EMAIL);
+            $criteria->addSelectColumn(ActiveCampaignContactsTableMap::COL_REFUND_TAG_NAMES);
             $criteria->addSelectColumn(ActiveCampaignContactsTableMap::COL_RECURRING_STATUS);
             $criteria->addSelectColumn(ActiveCampaignContactsTableMap::COL_PRODUCTS_PURCHASED);
             $criteria->addSelectColumn(ActiveCampaignContactsTableMap::COL_STRIPE_REFUND_PROCESSED);
@@ -324,6 +331,7 @@ class ActiveCampaignContactsTableMap extends TableMap
             $criteria->addSelectColumn($alias . '.first_name');
             $criteria->addSelectColumn($alias . '.last_name');
             $criteria->addSelectColumn($alias . '.email');
+            $criteria->addSelectColumn($alias . '.refund_tag_names');
             $criteria->addSelectColumn($alias . '.recurring_status');
             $criteria->addSelectColumn($alias . '.products_purchased');
             $criteria->addSelectColumn($alias . '.stripe_refund_processed');

@@ -23,6 +23,7 @@ use Propel\Runtime\Exception\PropelException;
  * @method     ChildActiveCampaignContactsQuery orderByFirstName($order = Criteria::ASC) Order by the first_name column
  * @method     ChildActiveCampaignContactsQuery orderByLastName($order = Criteria::ASC) Order by the last_name column
  * @method     ChildActiveCampaignContactsQuery orderByEmail($order = Criteria::ASC) Order by the email column
+ * @method     ChildActiveCampaignContactsQuery orderByRefundTagNames($order = Criteria::ASC) Order by the refund_tag_names column
  * @method     ChildActiveCampaignContactsQuery orderByRecurringStatus($order = Criteria::ASC) Order by the recurring_status column
  * @method     ChildActiveCampaignContactsQuery orderByProductsPurchased($order = Criteria::ASC) Order by the products_purchased column
  * @method     ChildActiveCampaignContactsQuery orderByStripeRefundProcessed($order = Criteria::ASC) Order by the stripe_refund_processed column
@@ -31,6 +32,7 @@ use Propel\Runtime\Exception\PropelException;
  * @method     ChildActiveCampaignContactsQuery groupByFirstName() Group by the first_name column
  * @method     ChildActiveCampaignContactsQuery groupByLastName() Group by the last_name column
  * @method     ChildActiveCampaignContactsQuery groupByEmail() Group by the email column
+ * @method     ChildActiveCampaignContactsQuery groupByRefundTagNames() Group by the refund_tag_names column
  * @method     ChildActiveCampaignContactsQuery groupByRecurringStatus() Group by the recurring_status column
  * @method     ChildActiveCampaignContactsQuery groupByProductsPurchased() Group by the products_purchased column
  * @method     ChildActiveCampaignContactsQuery groupByStripeRefundProcessed() Group by the stripe_refund_processed column
@@ -50,6 +52,7 @@ use Propel\Runtime\Exception\PropelException;
  * @method     ChildActiveCampaignContacts findOneByFirstName(string $first_name) Return the first ChildActiveCampaignContacts filtered by the first_name column
  * @method     ChildActiveCampaignContacts findOneByLastName(string $last_name) Return the first ChildActiveCampaignContacts filtered by the last_name column
  * @method     ChildActiveCampaignContacts findOneByEmail(string $email) Return the first ChildActiveCampaignContacts filtered by the email column
+ * @method     ChildActiveCampaignContacts findOneByRefundTagNames(string $refund_tag_names) Return the first ChildActiveCampaignContacts filtered by the refund_tag_names column
  * @method     ChildActiveCampaignContacts findOneByRecurringStatus(string $recurring_status) Return the first ChildActiveCampaignContacts filtered by the recurring_status column
  * @method     ChildActiveCampaignContacts findOneByProductsPurchased(string $products_purchased) Return the first ChildActiveCampaignContacts filtered by the products_purchased column
  * @method     ChildActiveCampaignContacts findOneByStripeRefundProcessed(boolean $stripe_refund_processed) Return the first ChildActiveCampaignContacts filtered by the stripe_refund_processed column *
@@ -61,6 +64,7 @@ use Propel\Runtime\Exception\PropelException;
  * @method     ChildActiveCampaignContacts requireOneByFirstName(string $first_name) Return the first ChildActiveCampaignContacts filtered by the first_name column and throws \Propel\Runtime\Exception\EntityNotFoundException when not found
  * @method     ChildActiveCampaignContacts requireOneByLastName(string $last_name) Return the first ChildActiveCampaignContacts filtered by the last_name column and throws \Propel\Runtime\Exception\EntityNotFoundException when not found
  * @method     ChildActiveCampaignContacts requireOneByEmail(string $email) Return the first ChildActiveCampaignContacts filtered by the email column and throws \Propel\Runtime\Exception\EntityNotFoundException when not found
+ * @method     ChildActiveCampaignContacts requireOneByRefundTagNames(string $refund_tag_names) Return the first ChildActiveCampaignContacts filtered by the refund_tag_names column and throws \Propel\Runtime\Exception\EntityNotFoundException when not found
  * @method     ChildActiveCampaignContacts requireOneByRecurringStatus(string $recurring_status) Return the first ChildActiveCampaignContacts filtered by the recurring_status column and throws \Propel\Runtime\Exception\EntityNotFoundException when not found
  * @method     ChildActiveCampaignContacts requireOneByProductsPurchased(string $products_purchased) Return the first ChildActiveCampaignContacts filtered by the products_purchased column and throws \Propel\Runtime\Exception\EntityNotFoundException when not found
  * @method     ChildActiveCampaignContacts requireOneByStripeRefundProcessed(boolean $stripe_refund_processed) Return the first ChildActiveCampaignContacts filtered by the stripe_refund_processed column and throws \Propel\Runtime\Exception\EntityNotFoundException when not found
@@ -70,6 +74,7 @@ use Propel\Runtime\Exception\PropelException;
  * @method     ChildActiveCampaignContacts[]|ObjectCollection findByFirstName(string $first_name) Return ChildActiveCampaignContacts objects filtered by the first_name column
  * @method     ChildActiveCampaignContacts[]|ObjectCollection findByLastName(string $last_name) Return ChildActiveCampaignContacts objects filtered by the last_name column
  * @method     ChildActiveCampaignContacts[]|ObjectCollection findByEmail(string $email) Return ChildActiveCampaignContacts objects filtered by the email column
+ * @method     ChildActiveCampaignContacts[]|ObjectCollection findByRefundTagNames(string $refund_tag_names) Return ChildActiveCampaignContacts objects filtered by the refund_tag_names column
  * @method     ChildActiveCampaignContacts[]|ObjectCollection findByRecurringStatus(string $recurring_status) Return ChildActiveCampaignContacts objects filtered by the recurring_status column
  * @method     ChildActiveCampaignContacts[]|ObjectCollection findByProductsPurchased(string $products_purchased) Return ChildActiveCampaignContacts objects filtered by the products_purchased column
  * @method     ChildActiveCampaignContacts[]|ObjectCollection findByStripeRefundProcessed(boolean $stripe_refund_processed) Return ChildActiveCampaignContacts objects filtered by the stripe_refund_processed column
@@ -171,7 +176,7 @@ abstract class ActiveCampaignContactsQuery extends ModelCriteria
      */
     protected function findPkSimple($key, ConnectionInterface $con)
     {
-        $sql = 'SELECT id, first_name, last_name, email, recurring_status, products_purchased, stripe_refund_processed FROM active_campaign_contacts WHERE id = :p0';
+        $sql = 'SELECT id, first_name, last_name, email, refund_tag_names, recurring_status, products_purchased, stripe_refund_processed FROM active_campaign_contacts WHERE id = :p0';
         try {
             $stmt = $con->prepare($sql);
             $stmt->bindValue(':p0', $key, PDO::PARAM_INT);
@@ -375,6 +380,31 @@ abstract class ActiveCampaignContactsQuery extends ModelCriteria
         }
 
         return $this->addUsingAlias(ActiveCampaignContactsTableMap::COL_EMAIL, $email, $comparison);
+    }
+
+    /**
+     * Filter the query on the refund_tag_names column
+     *
+     * Example usage:
+     * <code>
+     * $query->filterByRefundTagNames('fooValue');   // WHERE refund_tag_names = 'fooValue'
+     * $query->filterByRefundTagNames('%fooValue%', Criteria::LIKE); // WHERE refund_tag_names LIKE '%fooValue%'
+     * </code>
+     *
+     * @param     string $refundTagNames The value to use as filter.
+     * @param     string $comparison Operator to use for the column comparison, defaults to Criteria::EQUAL
+     *
+     * @return $this|ChildActiveCampaignContactsQuery The current query, for fluid interface
+     */
+    public function filterByRefundTagNames($refundTagNames = null, $comparison = null)
+    {
+        if (null === $comparison) {
+            if (is_array($refundTagNames)) {
+                $comparison = Criteria::IN;
+            }
+        }
+
+        return $this->addUsingAlias(ActiveCampaignContactsTableMap::COL_REFUND_TAG_NAMES, $refundTagNames, $comparison);
     }
 
     /**

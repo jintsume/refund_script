@@ -38,6 +38,7 @@
     <column name="first_name" phpName="FirstName" type="VARCHAR" size="255" required="true"/>
     <column name="last_name" phpName="LastName" type="VARCHAR" size="255" required="true"/>
     <column name="email" phpName="Email" type="VARCHAR" size="255" required="true"/>
+    <column name="refund_tag_names" phpName="RefundTagNames" type="VARCHAR" size="2000" required="true"/>
     <column name="recurring_status" phpName="RecurringStatus" type="VARCHAR" size="255" required="true"/>
     <column name="products_purchased" phpName="ProductsPurchased" type="VARCHAR" size="2000" required="true"/>
     <column name="stripe_refund_processed" phpName="StripeRefundProcessed" type="BOOLEAN" size="1" required="true" defaultValue="false"/>

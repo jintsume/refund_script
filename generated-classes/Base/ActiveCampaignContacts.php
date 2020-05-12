@@ -88,6 +88,13 @@ abstract class ActiveCampaignContacts implements ActiveRecordInterface
     protected $email;
 
     /**
+     * The value for the refund_tag_names field.
+     *
+     * @var        string
+     */
+    protected $refund_tag_names;
+
+    /**
      * The value for the recurring_status field.
      *
      * @var        string
@@ -396,6 +403,16 @@ abstract class ActiveCampaignContacts implements ActiveRecordInterface
     }
 
     /**
+     * Get the [refund_tag_names] column value.
+     *
+     * @return string
+     */
+    public function getRefundTagNames()
+    {
+        return $this->refund_tag_names;
+    }
+
+    /**
      * Get the [recurring_status] column value.
      *
      * @return string
@@ -514,6 +531,26 @@ abstract class ActiveCampaignContacts implements ActiveRecordInterface
 
         return $this;
     } // setEmail()
+
+    /**
+     * Set the value of [refund_tag_names] column.
+     *
+     * @param string $v new value
+     * @return $this|\ActiveCampaignContacts The current object (for fluent API support)
+     */
+    public function setRefundTagNames($v)
+    {
+        if ($v !== null) {
+            $v = (string) $v;
+        }
+
+        if ($this->refund_tag_names !== $v) {
+            $this->refund_tag_names = $v;
+            $this->modifiedColumns[ActiveCampaignContactsTableMap::COL_REFUND_TAG_NAMES] = true;
+        }
+
+        return $this;
+    } // setRefundTagNames()
 
     /**
      * Set the value of [recurring_status] column.
@@ -635,13 +672,16 @@ abstract class ActiveCampaignContacts implements ActiveRecordInterface
             $col = $row[TableMap::TYPE_NUM == $indexType ? 3 + $startcol : ActiveCampaignContactsTableMap::translateFieldName('Email', TableMap::TYPE_PHPNAME, $indexType)];
             $this->email = (null !== $col) ? (string) $col : null;
 
-            $col = $row[TableMap::TYPE_NUM == $indexType ? 4 + $startcol : ActiveCampaignContactsTableMap::translateFieldName('RecurringStatus', TableMap::TYPE_PHPNAME, $indexType)];
+            $col = $row[TableMap::TYPE_NUM == $indexType ? 4 + $startcol : ActiveCampaignContactsTableMap::translateFieldName('RefundTagNames', TableMap::TYPE_PHPNAME, $indexType)];
+            $this->refund_tag_names = (null !== $col) ? (string) $col : null;
+
+            $col = $row[TableMap::TYPE_NUM == $indexType ? 5 + $startcol : ActiveCampaignContactsTableMap::translateFieldName('RecurringStatus', TableMap::TYPE_PHPNAME, $indexType)];
             $this->recurring_status = (null !== $col) ? (string) $col : null;
 
-            $col = $row[TableMap::TYPE_NUM == $indexType ? 5 + $startcol : ActiveCampaignContactsTableMap::translateFieldName('ProductsPurchased', TableMap::TYPE_PHPNAME, $indexType)];
+            $col = $row[TableMap::TYPE_NUM == $indexType ? 6 + $startcol : ActiveCampaignContactsTableMap::translateFieldName('ProductsPurchased', TableMap::TYPE_PHPNAME, $indexType)];
             $this->products_purchased = (null !== $col) ? (string) $col : null;
 
-            $col = $row[TableMap::TYPE_NUM == $indexType ? 6 + $startcol : ActiveCampaignContactsTableMap::translateFieldName('StripeRefundProcessed', TableMap::TYPE_PHPNAME, $indexType)];
+            $col = $row[TableMap::TYPE_NUM == $indexType ? 7 + $startcol : ActiveCampaignContactsTableMap::translateFieldName('StripeRefundProcessed', TableMap::TYPE_PHPNAME, $indexType)];
             $this->stripe_refund_processed = (null !== $col) ? (boolean) $col : null;
             $this->resetModified();
 
@@ -651,7 +691,7 @@ abstract class ActiveCampaignContacts implements ActiveRecordInterface
                 $this->ensureConsistency();
             }
 
-            return $startcol + 7; // 7 = ActiveCampaignContactsTableMap::NUM_HYDRATE_COLUMNS.
+            return $startcol + 8; // 8 = ActiveCampaignContactsTableMap::NUM_HYDRATE_COLUMNS.
 
         } catch (Exception $e) {
             throw new PropelException(sprintf('Error populating %s object', '\\ActiveCampaignContacts'), 0, $e);
@@ -860,6 +900,9 @@ abstract class ActiveCampaignContacts implements ActiveRecordInterface
         if ($this->isColumnModified(ActiveCampaignContactsTableMap::COL_EMAIL)) {
             $modifiedColumns[':p' . $index++]  = 'email';
         }
+        if ($this->isColumnModified(ActiveCampaignContactsTableMap::COL_REFUND_TAG_NAMES)) {
+            $modifiedColumns[':p' . $index++]  = 'refund_tag_names';
+        }
         if ($this->isColumnModified(ActiveCampaignContactsTableMap::COL_RECURRING_STATUS)) {
             $modifiedColumns[':p' . $index++]  = 'recurring_status';
         }
@@ -891,6 +934,9 @@ abstract class ActiveCampaignContacts implements ActiveRecordInterface
                         break;
                     case 'email':
                         $stmt->bindValue($identifier, $this->email, PDO::PARAM_STR);
+                        break;
+                    case 'refund_tag_names':
+                        $stmt->bindValue($identifier, $this->refund_tag_names, PDO::PARAM_STR);
                         break;
                     case 'recurring_status':
                         $stmt->bindValue($identifier, $this->recurring_status, PDO::PARAM_STR);
@@ -969,12 +1015,15 @@ abstract class ActiveCampaignContacts implements ActiveRecordInterface
                 return $this->getEmail();
                 break;
             case 4:
-                return $this->getRecurringStatus();
+                return $this->getRefundTagNames();
                 break;
             case 5:
-                return $this->getProductsPurchased();
+                return $this->getRecurringStatus();
                 break;
             case 6:
+                return $this->getProductsPurchased();
+                break;
+            case 7:
                 return $this->getStripeRefundProcessed();
                 break;
             default:
@@ -1010,9 +1059,10 @@ abstract class ActiveCampaignContacts implements ActiveRecordInterface
             $keys[1] => $this->getFirstName(),
             $keys[2] => $this->getLastName(),
             $keys[3] => $this->getEmail(),
-            $keys[4] => $this->getRecurringStatus(),
-            $keys[5] => $this->getProductsPurchased(),
-            $keys[6] => $this->getStripeRefundProcessed(),
+            $keys[4] => $this->getRefundTagNames(),
+            $keys[5] => $this->getRecurringStatus(),
+            $keys[6] => $this->getProductsPurchased(),
+            $keys[7] => $this->getStripeRefundProcessed(),
         );
         $virtualColumns = $this->virtualColumns;
         foreach ($virtualColumns as $key => $virtualColumn) {
@@ -1065,12 +1115,15 @@ abstract class ActiveCampaignContacts implements ActiveRecordInterface
                 $this->setEmail($value);
                 break;
             case 4:
-                $this->setRecurringStatus($value);
+                $this->setRefundTagNames($value);
                 break;
             case 5:
-                $this->setProductsPurchased($value);
+                $this->setRecurringStatus($value);
                 break;
             case 6:
+                $this->setProductsPurchased($value);
+                break;
+            case 7:
                 $this->setStripeRefundProcessed($value);
                 break;
         } // switch()
@@ -1112,13 +1165,16 @@ abstract class ActiveCampaignContacts implements ActiveRecordInterface
             $this->setEmail($arr[$keys[3]]);
         }
         if (array_key_exists($keys[4], $arr)) {
-            $this->setRecurringStatus($arr[$keys[4]]);
+            $this->setRefundTagNames($arr[$keys[4]]);
         }
         if (array_key_exists($keys[5], $arr)) {
-            $this->setProductsPurchased($arr[$keys[5]]);
+            $this->setRecurringStatus($arr[$keys[5]]);
         }
         if (array_key_exists($keys[6], $arr)) {
-            $this->setStripeRefundProcessed($arr[$keys[6]]);
+            $this->setProductsPurchased($arr[$keys[6]]);
+        }
+        if (array_key_exists($keys[7], $arr)) {
+            $this->setStripeRefundProcessed($arr[$keys[7]]);
         }
     }
 
@@ -1172,6 +1228,9 @@ abstract class ActiveCampaignContacts implements ActiveRecordInterface
         }
         if ($this->isColumnModified(ActiveCampaignContactsTableMap::COL_EMAIL)) {
             $criteria->add(ActiveCampaignContactsTableMap::COL_EMAIL, $this->email);
+        }
+        if ($this->isColumnModified(ActiveCampaignContactsTableMap::COL_REFUND_TAG_NAMES)) {
+            $criteria->add(ActiveCampaignContactsTableMap::COL_REFUND_TAG_NAMES, $this->refund_tag_names);
         }
         if ($this->isColumnModified(ActiveCampaignContactsTableMap::COL_RECURRING_STATUS)) {
             $criteria->add(ActiveCampaignContactsTableMap::COL_RECURRING_STATUS, $this->recurring_status);
@@ -1272,6 +1331,7 @@ abstract class ActiveCampaignContacts implements ActiveRecordInterface
         $copyObj->setFirstName($this->getFirstName());
         $copyObj->setLastName($this->getLastName());
         $copyObj->setEmail($this->getEmail());
+        $copyObj->setRefundTagNames($this->getRefundTagNames());
         $copyObj->setRecurringStatus($this->getRecurringStatus());
         $copyObj->setProductsPurchased($this->getProductsPurchased());
         $copyObj->setStripeRefundProcessed($this->getStripeRefundProcessed());
@@ -1313,6 +1373,7 @@ abstract class ActiveCampaignContacts implements ActiveRecordInterface
         $this->first_name = null;
         $this->last_name = null;
         $this->email = null;
+        $this->refund_tag_names = null;
         $this->recurring_status = null;
         $this->products_purchased = null;
         $this->stripe_refund_processed = null;

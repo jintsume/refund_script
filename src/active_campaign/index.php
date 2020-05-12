@@ -5,9 +5,9 @@ require __DIR__.'/getRefundTagIds.php';
 require __DIR__.'/getCustomFieldsMap.php';
 require __DIR__.'/getRefundContacts.php';
 
-$refundTagIds = $getRefundTagIds();
+$refundTagsMap = $getRefundTagsMap();
 $customFieldsMap = $getCustomFieldsMap();
-$refundContacts = $getRefundContacts($refundTagIds, $customFieldsMap);
+$refundContacts = $getRefundContacts($refundTagsMap, $customFieldsMap);
 
 foreach ($refundContacts as $refundContact) {
     if (!(new ActiveCampaignContactsQuery())->findPK(intval($refundContact->id))) {
@@ -16,8 +16,9 @@ foreach ($refundContacts as $refundContact) {
         $activeCampaignContact->setFirstName($refundContact->firstName);
         $activeCampaignContact->setLastName($refundContact->lastName);
         $activeCampaignContact->setEmail($refundContact->email);
+        $activeCampaignContact->setRefundTagNames(json_encode($refundContact->refund_tag_names));
+        $activeCampaignContact->setProductsPurchased(json_encode($refundContact->products_purchased));
         $activeCampaignContact->setRecurringStatus($refundContact->recurring_status);
-        $activeCampaignContact->setProductsPurchased($refundContact->products_purchased);
         $activeCampaignContact->save();
         echo "Saved contact {$refundContact->id}\n";
     }
