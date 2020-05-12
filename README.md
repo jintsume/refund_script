@@ -4,7 +4,7 @@
 [Docker](https://docs.docker.com/get-docker/)
 
 ### Environment variables
-Copy `.env.example` to `.env` and fill out values with API and DB secrets
+Rename `.env.example` to `.env` and fill out values with API and DB secrets
 
 ### Installation
 `bash install.sh`
